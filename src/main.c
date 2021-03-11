@@ -103,6 +103,9 @@ int		infect(char *path)
 int		main(int ac, char **av)
 {
 	//outputhandle(ac, av); //TODO: activate for the real thing
+	int pid = 0;
+	char *nom = "amwa";
+	printf(">.> (%d) for %d and %s\n", check_process(nom, pid), pid, nom);
 	if (ac <= 1)
 	{
 		infect("/tmp/test");
