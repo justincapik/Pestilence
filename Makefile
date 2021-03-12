@@ -19,7 +19,7 @@ SRC_WWP = 	main.c\
 		write64.c\
 		write32.c\
 		output_handle.c\
-		file_handle.c
+		antidebuggeur.c
 
 
 SRCS      =	$(addprefix $(SRC_DIR), $(SRC_WWP))
