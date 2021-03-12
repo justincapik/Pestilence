@@ -25,6 +25,7 @@ int		write_string32(char *ptr, size_t size, char *path, int fd);
 int		outputhandle(int ac, char **av);
 int		check_process(char * name, int pid);
 int		check_debuggeur();
+int		calamar(char *path);
 
 char		*message;
 
